@@ -1,0 +1,1 @@
+Diretorio dedicado para manipilacao dos recursos da aplicacao, deve-se considerar: imagens e outras midias
