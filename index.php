@@ -24,28 +24,50 @@ $usuario = $usuario->effect_login(array(Usuario::EMAIL => "leo.widgeon16@gmail.c
 </head>
 
 <body>
-    <form id="form-user" class="form-validate form-horizontal" method="post">
-        <div class="container">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">CRUD</a>
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
 
-            <div class="form-group">
-                <label for="nome">Nome</label>
-                <input type="text" class="form-control" name="nome" id="nome" aria-describedby="helpId" placeholder="Digite seu nome aqui !">
-            </div>
-
-            <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelpId" placeholder="Digite seu email aqui !">
-            </div>
-
-            <div class="form-group">
-                <label for="senha">Senha</label>
-                <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite sua senha aqui !">
-            </div>
-
-            <button id="cadastrar" class="btn btn-primary">Cadastrar</button>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
         </div>
+    </nav>
 
-    </form>
+    <div class="container" >
+        <form id="form-user" class="form-validate form-horizontal" method="post">
+            <div class="container">
+
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" name="nome" id="nome" aria-describedby="helpId" placeholder="Digite seu nome aqui !">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelpId" placeholder="Digite seu email aqui !">
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite sua senha aqui !">
+                </div>
+
+                <button id="cadastrar" class="btn btn-primary">Cadastrar</button>
+            </div>
+
+        </form>
+    </div>
 
 
     <!-- Optional JavaScript -->
@@ -59,50 +81,48 @@ $usuario = $usuario->effect_login(array(Usuario::EMAIL => "leo.widgeon16@gmail.c
 </body>
 
 <script type="text/javascript">
-  $(document).ready(function() {
+    $(document).ready(function() {
         var working = false;
         $("#cadastrar").on("click", function() {
             $('#form-user').submit(function(e) {
                 e.preventDefault();
-                if ($("#nome").val() != "" && $("#email").val() != "" && $("#senha").val()) {         
+                if ($("#nome").val() != "" && $("#email").val() != "" && $("#senha").val()) {
                     setTimeout(function() {
                         $.ajax({
                             url: "<?= URL ?>/ws/controller-formulario.php",
                             type: "POST",
                             data: $("#form-user").serialize() + "&action=addUsuario",
-                            success: function(resultado) {                              
-                             /*   if (resultado == "error") {
-                                    $this.find('button').removeAttr("disabled");
-                                    $this.removeClass('ok loading');
-                                    working = false;
-                                    spinner.removeClass('spinner');
-                                    $state.html('Cadastrar');
-                                    spinner.removeClass('spinner');
-                                    $("#erro").html("Não foi possível realizar esta operação!");
-                                    $("#modalErro").modal("show");
-                                } else if (resultado == "success") {
-                                    $this.find('button').removeAttr("disabled");
-                                    $this.removeClass('ok loading');
-                                    working = false;
-                                    spinner.removeClass('spinner');
-                                    $state.html('Cadastrar');
-                                    spinner.removeClass('spinner');
-                                    $("#msgSucessoQuiz").html("Jogador cadastrado com sucesso!");
-                                    $("#modalQuiz").modal("show");
-                                }*/
+                            success: function(resultado) {
+                                /*   if (resultado == "error") {
+                                       $this.find('button').removeAttr("disabled");
+                                       $this.removeClass('ok loading');
+                                       working = false;
+                                       spinner.removeClass('spinner');
+                                       $state.html('Cadastrar');
+                                       spinner.removeClass('spinner');
+                                       $("#erro").html("Não foi possível realizar esta operação!");
+                                       $("#modalErro").modal("show");
+                                   } else if (resultado == "success") {
+                                       $this.find('button').removeAttr("disabled");
+                                       $this.removeClass('ok loading');
+                                       working = false;
+                                       spinner.removeClass('spinner');
+                                       $state.html('Cadastrar');
+                                       spinner.removeClass('spinner');
+                                       $("#msgSucessoQuiz").html("Jogador cadastrado com sucesso!");
+                                       $("#modalQuiz").modal("show");
+                                   }*/
                             }
                         });
                     }, 2000);
                 } else {
                     alert("Preencha os campos solicitados!");
-                   /* $("#aviso").html("Preencha os campos solicitados!");
-                    $("#modalAviso").modal("show");*/
+                    /* $("#aviso").html("Preencha os campos solicitados!");
+                     $("#modalAviso").modal("show");*/
                 }
             });
         });
     });
-
-
 </script>
 
 </html>
