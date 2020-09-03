@@ -9,13 +9,15 @@ $selecao = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
 
 
 switch ($selecao) {
-    case 'addUsuario':
-        array_pop($_POST);
+    case 'excluirUsuario':
+
+        $id = $_POST['usuario_id'];
+
         $t = new Usuario();
-        $r = $t->create_new_account_of_user($_POST);
-        if($t->getResult() == 0){
+        $r = $t->delete(Usuario::ENTIDADE, $id);
+        if ($t->getResult() == 1) {
             echo TAG_SUCCESS;
-        }else{
+        } else {
             echo TAG_ERROR;
         }
         break;

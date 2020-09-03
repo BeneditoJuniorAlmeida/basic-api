@@ -1,8 +1,15 @@
 <?php
 
-require "./_app/Config.inc.php";
+require "../_app/Config.inc.php";
+$URL = $_GET['usuario_id'];
+var_dump($URL);
 
-$usuario = new Usuario();
+$daoUsuario = new Usuario();
+$daoUsuario->listUser($URL);
+echo $usuario = $daoUsuario->getResult();
+
+
+//$usuario = new Usuario();
 
 //$usuario = $usuario->effect_login(array(Usuario::EMAIL => "leo.widgeon16@gmail.com", Usuario::SENHA => "12345"));
 
@@ -24,8 +31,9 @@ $usuario = new Usuario();
 </head>
 
 <body>
+
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
-        <a class="navbar-brand" href="<?= URL ?>/index.php">CRUD</a>
+        <a class="navbar-brand" href="<?= URL_RAIZ ?>/index.php">CRUD</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -46,21 +54,25 @@ $usuario = new Usuario();
             <div class="container">
 
                 <div class="form-group">
-                    <label for="usuario_nome">Nome</label>
-                    <input type="text" class="form-control" name="usuario_nome" id="usuario_nome" placeholder="Digite seu nome aqui !">
+                    <input type="hidden" class="form-control" name="usuario_id" id="usuario_id" value="<?= $usuario['usuario_id']; ?>" placeholder="Digite seu nome aqui !">
+                </div>
+
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" name="usuario_nome" id="usuario_nome" value="<?= $usuario['usuario_nome']; ?>" placeholder="Digite seu nome aqui !">
                 </div>
 
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Digite seu email aqui !">
+                    <input type="email" class="form-control" name="email" id="email" value="<?= $usuario['email']; ?>" placeholder="Digite seu email aqui !">
                 </div>
 
                 <div class="form-group">
                     <label for="senha">Senha</label>
-                    <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite sua senha aqui !">
+                    <input type="password" class="form-control" name="senha" id="senha" value="<?= $usuario['senha']; ?>" placeholder="Digite sua senha aqui !">
                 </div>
 
-                <button id="cadastrar" class="btn btn-primary">Cadastrar</button>
+                <button id="editar" class="btn btn-primary">Cadastrar</button>
             </div>
 
         </form>
@@ -78,35 +90,24 @@ $usuario = new Usuario();
 </body>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        var working = false;
-        $("#cadastrar").on("click", function() {
-            $('#form-user').submit(function(e) {
-                e.preventDefault();
-                if ($("#nome").val() != "" && $("#email").val() != "" && $("#senha").val()) {
-                    setTimeout(function() {
-                        $.ajax({
-                            url: "<?= URL ?>/ws/controller-formulario.php",
-                            type: "POST",
-                            data: $("#form-user").serialize() + "&action=addUsuario",
-                            success: function(resultado) {
-                                alert(resultado);
-                                if (resultado == "error") {
-                                    alert("Erro ao cadastrar !");
-                                   
-                                } else if (resultado == "success") {
-                                    alert("Cadastrado com sucesso !");
-                                }
-                            }
-                        });
-                    }, 2000);
+    $(document).on('click', '#editar', function() {
+
+        var usuario_id = $(this).closest('tr').find('td[data-id]').attr('data-id');
+        $.ajax({
+            url: "<?= URL ?>/ws/controller-editar.php",
+            type: "POST",
+            data: "usuario_id=" + usuario_id + "&action=editarUsuario",
+            success: function(resultado) {
+                alert(resultado);
+                /*if (resultado == "success") {
+                    alert("Usuario atualizado com sucesso !");
+                    document.location.reload(true);
                 } else {
-                    alert("Preencha os campos solicitados!");
-                    /* $("#aviso").html("Preencha os campos solicitados!");
-                     $("#modalAviso").modal("show");*/
-                }
-            });
+                    alert("Erro ao atualizar usuario !");
+                }*/
+            }
         });
+        return false;
     });
 </script>
 

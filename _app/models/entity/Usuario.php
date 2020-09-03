@@ -10,16 +10,7 @@ class Usuario extends Dao implements Functions
     const NOME = Usuario::ENTIDADE . "_nome";
     const EMAIL = "email";
     const SENHA = "senha";
-    // const TELEFONE = "telefone";
-    const CIDADE = "cidade";
-    const ESTADO = "estado";
-    const STATUS = "status_ativo";
-    const SEXO = "sexo";
-    const TOKEN = "token";
-    const PROFISSAO = "profissao";
-    const ESCOLARIDADE = "escolaridade";
-    const DESCRICAO = "descricao_perfil";
-    const IMAGEM_URL = "imagem_url";
+
 
     const WHERE_USUARIO = "where usuario_id = :aid";
     const WHERE_EMAIL = "where email = :email";
@@ -59,15 +50,6 @@ class Usuario extends Dao implements Functions
     private $usuario_nome;
     private $email;
     private $senha;
-    private $cidade;
-    private $estado;
-    private $status_ativo;
-    private $sexo;
-    private $token;
-    private $profissao;
-    private $escolaridade;
-    private $descricao_perfil;
-    private $imagem_url;
 
     // Getter's and Setter's
     public function getUsuario_id()
@@ -110,95 +92,6 @@ class Usuario extends Dao implements Functions
         $this->senha = $senha;
     }
 
-    public function getCidade()
-    {
-        return $this->cidade;
-    }
-
-    public function setCidade($cidade)
-    {
-        $this->cidade = $cidade;
-    }
-
-    public function getEstado()
-    {
-        return $this->estado;
-    }
-
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-    }
-
-    public function getStatus_ativo()
-    {
-        return $this->status_ativo;
-    }
-
-    public function setStatus_ativo($status_ativo)
-    {
-        $this->status_ativo = $status_ativo;
-    }
-
-    public function getSexo()
-    {
-        return $this->sexo;
-    }
-
-    public function setSexo($sexo)
-    {
-        $this->sexo = $sexo;
-    }
-
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    public function setToken($token)
-    {
-        $this->token = $token;
-    }
-
-    public function getProfissao()
-    {
-        return $this->profissao;
-    }
-
-    public function setProfissao($profissao)
-    {
-        $this->profissao = $profissao;
-    }
-
-    public function getEscolaridade()
-    {
-        return $this->escolaridade;
-    }
-
-    public function setEscolaridade($escolaridade)
-    {
-        $this->escolaridade = $escolaridade;
-    }
-
-    public function getDescricao_perfil()
-    {
-        return $this->descricao_perfil;
-    }
-
-    public function setDescricao_perfil($descricao_perfil)
-    {
-        $this->descricao_perfil = $descricao_perfil;
-    }
-
-    public function getImagem_url()
-    {
-        return $this->imagem_url;
-    }
-
-    public function setImagem_url($imagem_url)
-    {
-        $this->imagem_url = $imagem_url;
-    }
 
     // functions of class
     public function transform_array_to_object(array $data)
@@ -208,15 +101,6 @@ class Usuario extends Dao implements Functions
         isset($data[Usuario::NOME]) ? $usuario->setUsuario_nome($data[Usuario::NOME]) : null;
         isset($data[Usuario::EMAIL]) ? $usuario->setEmail($data[Usuario::EMAIL]) : null;
         isset($data[Usuario::SENHA]) ? $usuario->setSenha($data[Usuario::SENHA]) : null;
-        isset($data[Usuario::CIDADE]) ? $usuario->setCidade($data[Usuario::CIDADE]) : null;
-        isset($data[Usuario::ESTADO]) ? $usuario->setEstado($data[Usuario::ESTADO]) : null;
-        isset($data[Usuario::STATUS]) ? $usuario->setStatus_ativo($data[Usuario::STATUS]) : null;
-        isset($data[Usuario::SEXO]) ? $usuario->setSexo($data[Usuario::SEXO]) : null;
-        isset($data[Usuario::TOKEN]) ? $usuario->setToken($data[Usuario::TOKEN]) : null;
-        isset($data[Usuario::PROFISSAO]) ? $usuario->setProfissao($data[Usuario::PROFISSAO]) : null;
-        isset($data[Usuario::ESCOLARIDADE]) ? $usuario->setEscolaridade($data[Usuario::ESCOLARIDADE]) : null;
-        isset($data[Usuario::DESCRICAO]) ? $usuario->setDescricao_perfil($data[Usuario::DESCRICAO]) : null;
-        isset($data[Usuario::IMAGEM_URL]) ? $usuario->setImagem_url($data[Usuario::IMAGEM_URL]) : null;
         // retorna null para o a atributo result
         $usuario->setResult();
         return $usuario;
@@ -369,7 +253,22 @@ class Usuario extends Dao implements Functions
         return $db_result;
     }
 
-    public function listUsuario()
+    public function listUser(string $id)
+    {
+       
+        if (!empty($id)) {
+            var_dump($id);
+            $usuario = new Usuario();
+            $usuario->custom_query_on_table(Usuario::ENTIDADE, Usuario::WHERE_USUARIO, array(Usuario::ID => $id));
+            if ($usuario->getResult()) {
+                return $usuario->getResult();
+            } else {
+                return TAG_ERROR;
+            }
+        }
+    }
+
+    public function listUsuarios()
     {
         $usuario = new Usuario();
         $usuario->list(USUARIO::ENTIDADE);

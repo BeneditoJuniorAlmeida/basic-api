@@ -4,7 +4,7 @@ require "./_app/Config.inc.php";
 
 $usuario = new Usuario();
 
-//$usuario = $usuario->effect_login(array(Usuario::EMAIL => "leo.widgeon16@gmail.com", Usuario::SENHA => "12345"));
+$usuario = $usuario->effect_login(array(Usuario::EMAIL => "leo.widgeon16@gmail.com", Usuario::SENHA => "12345"));
 
 //$usuario = $usuario->listUsuario();
 //var_dump($usuario);
@@ -24,35 +24,20 @@ $usuario = new Usuario();
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
-        <a class="navbar-brand" href="<?= URL ?>/index.php">CRUD</a>
-        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
-        <div class="collapse navbar-collapse" id="collapsibleNavId">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?= URL ?>/views/list.php">Registros</a> <span class="sr-only">(current)</span></a>
-                </li>
 
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-    </nav></br>
 
-    <div class="container">
+    <div class="container" >
         <form id="form-user" class="form-validate form-horizontal" method="post">
             <div class="container">
 
                 <div class="form-group">
-                    <label for="usuario_nome">Nome</label>
-                    <input type="text" class="form-control" name="usuario_nome" id="usuario_nome" placeholder="Digite seu nome aqui !">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" name="nome" id="nome" aria-describedby="helpId" placeholder="Digite seu nome aqui !">
                 </div>
 
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Digite seu email aqui !">
+                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelpId" placeholder="Digite seu email aqui !">
                 </div>
 
                 <div class="form-group">
@@ -90,13 +75,25 @@ $usuario = new Usuario();
                             type: "POST",
                             data: $("#form-user").serialize() + "&action=addUsuario",
                             success: function(resultado) {
-                                alert(resultado);
-                                if (resultado == "error") {
-                                    alert("Erro ao cadastrar !");
-                                   
-                                } else if (resultado == "success") {
-                                    alert("Cadastrado com sucesso !");
-                                }
+                                /*   if (resultado == "error") {
+                                       $this.find('button').removeAttr("disabled");
+                                       $this.removeClass('ok loading');
+                                       working = false;
+                                       spinner.removeClass('spinner');
+                                       $state.html('Cadastrar');
+                                       spinner.removeClass('spinner');
+                                       $("#erro").html("Não foi possível realizar esta operação!");
+                                       $("#modalErro").modal("show");
+                                   } else if (resultado == "success") {
+                                       $this.find('button').removeAttr("disabled");
+                                       $this.removeClass('ok loading');
+                                       working = false;
+                                       spinner.removeClass('spinner');
+                                       $state.html('Cadastrar');
+                                       spinner.removeClass('spinner');
+                                       $("#msgSucessoQuiz").html("Jogador cadastrado com sucesso!");
+                                       $("#modalQuiz").modal("show");
+                                   }*/
                             }
                         });
                     }, 2000);

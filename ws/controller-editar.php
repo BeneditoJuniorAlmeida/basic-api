@@ -9,13 +9,16 @@ $selecao = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
 
 
 switch ($selecao) {
-    case 'addUsuario':
-        array_pop($_POST);
+    case 'editarUsuario':
+       array_pop($_POST);
+       var_dump($_POST);
         $t = new Usuario();
-        $r = $t->create_new_account_of_user($_POST);
-        if($t->getResult() == 0){
+        $r = $t->update(Usuario::ENTIDADE, $_POST);
+        var_dump($t->getResult());
+        exit;
+        if ($t->getResult() == 1) {
             echo TAG_SUCCESS;
-        }else{
+        } else {
             echo TAG_ERROR;
         }
         break;
